@@ -630,12 +630,12 @@ require('lazy').setup({
     lazy = false,
     keys = {
       {
-        '<leader>f',
+        '<leader>fb',
         function()
           require('conform').format { async = true, lsp_fallback = true }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[F]ormat [B]uffer',
       },
     },
     opts = {
@@ -644,7 +644,11 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        if vim.g.disable_autoformat then
+          return
+        end
+
+        local disable_filetypes = { elixir = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -914,3 +918,23 @@ require('lazy').setup({
 require 'custom.lsp_config'
 
 require 'custom.options'
+
+require('telescope').load_extension 'harpoon'
+
+vim.keymap.set('n', '<leader>a', require('harpoon.mark').add_file, { desc = 'Harpoon [A]dd mark' })
+vim.keymap.set('n', '<C-e>', require('harpoon.ui').toggle_quick_menu, { desc = 'Open Harpoon menu' })
+
+vim.keymap.set('n', '<C-h>', function()
+  require('harpoon.ui').nav_file(1)
+end, { desc = 'Nav to file 1' })
+vim.keymap.set('n', '<C-j>', function()
+  require('harpoon.ui').nav_file(2)
+end, { desc = 'Nav to file 2' })
+vim.keymap.set('n', '<C-k>', function()
+  require('harpoon.ui').nav_file(3)
+end, { desc = 'Nav to file 3' })
+vim.keymap.set('n', '<C-l>', function()
+  require('harpoon.ui').nav_file(4)
+end, { desc = 'Nav to file 4' })
+
+vim.keymap.set('n', '<leader>sm', '<CMD>Telescope harpoon marks <CR>', { desc = '[S]earch Harpoon [M]arks' })

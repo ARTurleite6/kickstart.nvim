@@ -4,6 +4,12 @@
 -- See the kickstart.nvim README for more information
 return {
   {
+    'ThePrimeagen/harpoon',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+  },
+  {
     'stevearc/oil.nvim',
     config = function()
       require('oil').setup()
@@ -27,24 +33,10 @@ return {
       local elixirls = require 'elixir.elixirls'
 
       elixir.setup {
-        nextls = {
-          enable = true,
-          init_options = {
-            experimental = {
-              completions = {
-                enable = true,
-              },
-            },
-          },
-          on_attach = function(client, bufnr)
-            vim.keymap.set('n', '<space>fp', '<CMD>Elixir nextls from-pipe<cr>', { buffer = true, noremap = true })
-            vim.keymap.set('n', '<space>tp', '<CMD>Elixir nextls to-pipe<cr>', { buffer = true, noremap = true })
-            vim.keymap.set('n', '<space>ar', '<CMD>Elixir nextls alias-refactor<cr>', { buffer = true, noremap = true })
-          end,
-        },
+        nextls = { enable = true },
         credo = {},
         elixirls = {
-          enable = false,
+          enable = true,
           settings = elixirls.settings {
             dialyzerEnabled = false,
             enableTestLenses = false,
