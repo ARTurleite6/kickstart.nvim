@@ -410,6 +410,13 @@ require('lazy').setup({
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    opts = function()
+      return {
+        inlay_hints = {
+          enabled = true,
+        },
+      }
+    end,
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
@@ -938,3 +945,5 @@ vim.keymap.set('n', '<C-l>', function()
 end, { desc = 'Nav to file 4' })
 
 vim.keymap.set('n', '<leader>sm', '<CMD>Telescope harpoon marks <CR>', { desc = '[S]earch Harpoon [M]arks' })
+
+vim.g.disable_autoformat = true
