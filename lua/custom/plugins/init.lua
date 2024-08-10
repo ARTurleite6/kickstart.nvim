@@ -25,12 +25,21 @@ return {
       local elixirls = require 'elixir.elixirls'
 
       elixir.setup {
-        nextls = { enable = true },
-        credo = {},
+        nextls = {
+          enable = false,
+          init_options = {
+            extensions = {
+              credo = { enabled = true },
+            },
+            experimental = {
+              completions = { enable = true },
+            },
+          },
+        },
         elixirls = {
           enable = true,
           settings = elixirls.settings {
-            dialyzerEnabled = false,
+            dialyzerEnabled = true,
             enableTestLenses = false,
           },
           on_attach = function(client, bufnr)
@@ -38,6 +47,9 @@ return {
             vim.keymap.set('n', '<space>tp', ':ElixirToPipe<cr>', { buffer = true, noremap = true })
             vim.keymap.set('v', '<space>em', ':ElixirExpandMacro<cr>', { buffer = true, noremap = true })
           end,
+        },
+        projectionist = {
+          enable = true,
         },
       }
     end,

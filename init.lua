@@ -952,4 +952,35 @@ end, { desc = 'Nav to file 4' })
 
 vim.keymap.set('n', '<leader>sm', '<CMD>Telescope harpoon marks <CR>', { desc = '[S]earch Harpoon [M]arks' })
 
+vim.keymap.set('n', '<C-,>', '5<C-W><C->>')
+vim.keymap.set('n', '<C-.>', '5<C-W><C-<>')
+vim.keymap.set('n', '<C-t>', '5<C-W><C-+>')
+vim.keymap.set('n', '<C-s>', '5<C-W><C-->')
+
+-- Open a terminal at the bottom of the screen with a fixed height.
+vim.keymap.set('n', '<leader>st', function()
+  vim.cmd.new()
+  vim.cmd.wincmd 'J'
+  vim.api.nvim_win_set_height(0, 12)
+  vim.wo.winfixheight = true
+  vim.cmd.term()
+end)
+
 vim.g.disable_autoformat = true
+
+vim.filetype.add {
+  extension = {
+    c3 = 'c3',
+    c3i = 'c3',
+    c3t = 'c3',
+  },
+}
+
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+parser_config.c3 = {
+  install_info = {
+    url = 'https://github.com/c3lang/tree-sitter-c3',
+    files = { 'src/parser.c', 'src/scanner.c' },
+    branch = 'main',
+  },
+}
